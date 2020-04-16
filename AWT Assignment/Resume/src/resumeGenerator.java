@@ -1,13 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-import com.google.inject.internal.util.$Strings;
 import com.itextpdf.text.*;
 import com.itextpdf.text.Chunk;
+import com.itextpdf.text.ListItem;
 import com.itextpdf.text.pdf.draw.LineSeparator;
+
 
 import java.awt.Desktop;
 import java.io.File;
@@ -15,9 +10,13 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Map;
 
+import com.itextpdf.text.Document;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.draw.VerticalPositionMark;
+import com.itextpdf.tool.xml.html.table.Table;
+import org.w3c.dom.Text;
 
 import java.io.FileOutputStream;
 
@@ -33,161 +32,186 @@ public class resumeGenerator {
         Document resume = new Document();
         try {
 
+
             PdfWriter.getInstance(resume, new FileOutputStream("resume.pdf"));
             resume.open();
             LineSeparator line;
             line = new LineSeparator();
             Font f = new Font();
             resume.add(Chunk.NEWLINE);
-            String space = "";
-            Font font2 = new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD | Font.UNDERLINE);
-            resume.add(new Paragraph("RESUME", font2));
-            Paragraph name = new Paragraph((String) details.get("Name"));
-            name.setAlignment(Paragraph.ALIGN_LEFT);
+            Font font2 = new Font(Font.FontFamily.HELVETICA, 16, Font.BOLD );
+            Paragraph name = new Paragraph((String) details.get("Name"), font2);
+            name.setAlignment(Paragraph.ALIGN_RIGHT);
             resume.add(name);
-            Paragraph email = new Paragraph((String) details.get("Email"));
-            email.setAlignment(Paragraph.ALIGN_RIGHT);
-            resume.add(email);
-            Paragraph contact = new Paragraph((String) details.get("ContactNumber"));
+
+            Font font = new Font(Font.FontFamily.HELVETICA, 8);
+
+            Paragraph address = new Paragraph((String) details.get("Address"), font);
+            address.setAlignment(Paragraph.ALIGN_RIGHT);
+            resume.add(address);
+            Paragraph contact = new Paragraph((String) details.get("ContactNumber"), font);
             contact.setAlignment(Paragraph.ALIGN_RIGHT);
             resume.add(contact);
+            Paragraph email = new Paragraph((String) details.get("Email"), font);
+            email.setAlignment(Paragraph.ALIGN_RIGHT);
+            resume.add(email);
+            Font font1 = new Font(Font.FontFamily.HELVETICA, 8, Font.BOLD );
             resume.add(Chunk.NEWLINE);
             resume.add(line);
+            Paragraph obj = new Paragraph("OBJECTIVE",font1);
+            obj.setAlignment(Element.ALIGN_MIDDLE);
+            resume.add(obj);
             resume.add(Chunk.NEWLINE);
-            Font font1 = new Font(Font.FontFamily.HELVETICA, 13, Font.BOLD | Font.UNDERLINE);
-            resume.add(new Chunk("Qulaification ", font1));
+            resume.add(line);
+            Paragraph objective = new Paragraph((String) details.get("Objective"), font);
+            objective.setAlignment(Paragraph.ALIGN_JUSTIFIED);
+            resume.add(objective);
+
             resume.add(Chunk.NEWLINE);
-            PdfPTable table = new PdfPTable(3);
-            PdfPCell cell1 = new PdfPCell(new Paragraph("College"));
-            PdfPCell cell2 = new PdfPCell(new Paragraph("Percentage"));
-            PdfPCell cell3 = new PdfPCell(new Paragraph("Date"));
-            PdfPCell cell4;
-            cell4 = new PdfPCell(new Paragraph((String) details.get("SchoolX")));
-            resume.add(cell4);
+            resume.add(line);
+            Paragraph edu = new Paragraph("EDUCATION",font1);
+            resume.add(edu);
             resume.add(Chunk.NEWLINE);
-            PdfPCell cell5 = new PdfPCell(new Paragraph((String) details.get("PercentageX")));
-            resume.add(cell5);
-            PdfPCell cell6;
-            cell6 = new PdfPCell(new Paragraph((String) details.get("Date X")));
-            resume.add(cell6);
-            PdfPCell cell7;
-            cell7 = new PdfPCell(new Paragraph((String) details.get("SchoolXII")));
-            resume.add(cell7);
+            resume.add(line);
+            Chunk col = new Chunk(new VerticalPositionMark());
+            Paragraph colp = new Paragraph(20,(String) details.get("College"),font1);
+            colp.add(new Chunk(col));
+            colp.add(details.get("DateCollege"));
+            colp.setIndentationLeft(25);
+            colp.setIndentationRight(30);
+            resume.add(colp);
+            Chunk br = new Chunk(details.get("BranchName"), font);
+            Chunk cgpa = new Chunk("  CGPA "+details.get("CollegePercentage"),font1);
+            Paragraph branch = new Paragraph();
+            branch.add(br);
+            branch.add(cgpa);
+            branch.setIndentationLeft(30);
+            branch.setLeading(15);
+            resume.add(branch);
+
+
+            Chunk c12 = new Chunk(new VerticalPositionMark());
+            Paragraph sc1 = new Paragraph(20,(String) details.get("SchoolXII"),font1);
+            sc1.add(new Chunk(c12));
+            sc1.add(details.get("DateXII"));
+            sc1.setIndentationLeft(25);
+            sc1.setIndentationRight(30);
+            resume.add(sc1);
+            Chunk br2 = new Chunk("Class 12th ", font);
+            Chunk per12 = new Chunk("   Percentage "+details.get("PercentageXII"),font1);
+            Paragraph sc12 = new Paragraph();
+            sc12.add(br2);
+            sc12.add(per12);
+            sc12.setIndentationLeft(30);
+            sc12.setLeading(15);
+            resume.add(sc12);
+
+
+            Chunk c10= new Chunk(new VerticalPositionMark());
+            Paragraph sc2 = new Paragraph(20,(String) details.get("SchoolX"),font1);
+            sc2.add(new Chunk(c10));
+            sc2.add(details.get("DateX"));
+            sc2.setIndentationLeft(25);
+            sc2.setIndentationRight(30);
+            resume.add(sc2);
+            Chunk br10 = new Chunk("Class 10th ", font);
+            Chunk per10 = new Chunk("   Percentage "+details.get("PercentageX"),font1);
+            Paragraph sc10 = new Paragraph();
+            sc10.add(br10);
+            sc10.add(per10);
+            sc10.setIndentationLeft(30);
+            sc10.setLeading(15);
+            resume.add(sc10);
+
+
             resume.add(Chunk.NEWLINE);
-            PdfPCell cell8 = new PdfPCell(new Paragraph((String) details.get("PercentageXII")));
-            resume.add(cell8);
-            PdfPCell cell9;
-            cell9 = new PdfPCell(new Paragraph((String) details.get("Date XII")));
-            resume.add(cell9);
-            table.addCell(cell1);
-            table.addCell(cell2);
-            table.addCell(cell3);
-            table.addCell(cell4);
-            table.addCell(cell5);
-            table.addCell(cell6);
-            table.addCell(cell7);
-            table.addCell(cell8);
-            table.addCell(cell9);
-            resume.add(table);
+            resume.add(line);
+            Paragraph skill = new Paragraph("SKILLS",font1);
+            resume.add(skill);
             resume.add(Chunk.NEWLINE);
-            Font font3;
-            font3 = new Font(Font.FontFamily.HELVETICA, 13, Font.BOLD | Font.UNDERLINE);
-            resume.add(new Chunk("Graduation and PostGraduation ", font1));
-            //resume.add(Chunk.NEWLINE);
-            PdfPTable table1;
-            table1 = new PdfPTable(4);
-            PdfPCell cell10 = new PdfPCell(new Paragraph(" College"));
-            PdfPCell cell11 = new PdfPCell(new Paragraph("University"));
-            PdfPCell cell12 = new PdfPCell(new Paragraph("CGPA"));
-            PdfPCell cell13 = new PdfPCell(new Paragraph("DATE"));
-            PdfPCell cell14;
-            cell14 = new PdfPCell(new Paragraph((String) details.get("GraduationCollege")));
-            resume.add(cell14);
+            resume.add(line);
+            List list = new List();
+            list.setSymbolIndent(15);
+            list.setListSymbol("\u2022");
+            list.add(new ListItem(20,details.get("Skill1"), font));
+            list.add(new ListItem(20,details.get("Skill2"), font));
+            list.add(new ListItem(20,details.get("Skill3"), font));
+            list.add(new ListItem(20,details.get("Skill4"), font));
+            list.setIndentationLeft(30);
+            resume.add(list);
             resume.add(Chunk.NEWLINE);
-            PdfPCell cell15 = new PdfPCell(new Paragraph((String) details.get("GraduateUniversity")));
-            resume.add(cell15);
+            resume.add(line);
+
+            Paragraph exp = new Paragraph("EXPERIENCE AND PROJECTS ",font1);
+            resume.add(exp);
             resume.add(Chunk.NEWLINE);
-            PdfPCell cell16 = new PdfPCell(new Paragraph((String) details.get("GraduationCGPA")));
-            resume.add(cell16);
-            PdfPCell cell17;
-            cell17 = new PdfPCell(new Paragraph((String) details.get("Graduation date")));
-            resume.add(cell7);
-            PdfPCell cell18;
-            cell18 = new PdfPCell(new Paragraph((String) details.get("PostGraduationCollege")));
-            resume.add(cell8);
+            resume.add(line);
+
+            Chunk glue = new Chunk(new VerticalPositionMark());
+            Paragraph p = new Paragraph(20,(String) "1. "+details.get("ProjectName1"),font1);
+            p.add(new Chunk(glue));
+            p.add(details.get("ProjectDate1"));
+            p.setIndentationRight(30);
+            p.setIndentationLeft(25);
+            resume.add(p);
+            Chunk ch5 = new Chunk( " Abstract: ", font1);
+            Chunk ch6 = new Chunk(details.get("ProjectDescription1"),font);
+            Paragraph pd1 = new Paragraph();
+            pd1.add(ch5);
+            pd1.add(ch6);
+            pd1.setIndentationLeft(30);
+            pd1.setLeading(10);
+            resume.add(pd1);
+
+
+            Chunk glue2 = new Chunk(new VerticalPositionMark());
+            Paragraph p2 = new Paragraph(20,(String) "2. "+details.get("ProjectName2"),font1);
+            p2.add(new Chunk(glue2));
+            p2.add(details.get("ProjectDate2"));
+            p2.setIndentationRight(30);
+            p2.setIndentationLeft(25);
+            resume.add(p2);
+            Chunk ch3 = new Chunk( " Abstract: ", font1);
+            Chunk ch4 = new Chunk(details.get("ProjectDescription2"),font);
+            Paragraph pd2 = new Paragraph();
+            pd2.add(ch3);
+            pd2.add(ch4);
+            pd2.setIndentationLeft(30);
+            pd2.setLeading(10);
+            resume.add(pd2);
+
+
+            Chunk glue3= new Chunk(new VerticalPositionMark());
+            Paragraph p3 = new Paragraph(20,(String) "3. "+details.get("ProjectName3"),font1);
+            p3.add(new Chunk(glue3));
+            p3.add(details.get("ProjectDate3"));
+            p3.setIndentationRight(30);
+            p3.setIndentationLeft(25);
+            resume.add(p3);
+            Chunk ch1 = new Chunk( " Abstract: ", font1);
+            Chunk ch2 = new Chunk(details.get("ProjectDescription3"),font);
+            Paragraph pd3 = new Paragraph();
+            pd3.add(ch1);
+            pd3.add(ch2);
+            pd3.setIndentationLeft(30);
+            pd3.setLeading(10);
+            resume.add(pd3);
+
             resume.add(Chunk.NEWLINE);
-            PdfPCell cell19;
-            cell19 = new PdfPCell(new Paragraph((String) details.get("PostGraduateUniversity")));
-            resume.add(cell19);
-            PdfPCell cell20;
-            cell20 = new PdfPCell(new Paragraph((String) details.get("PostGraduateCGPA")));
-            resume.add(cell20);
-            PdfPCell cell21;
-            cell21 = new PdfPCell(new Paragraph((String) details.get("Post Graduation date")));
-            resume.add(cell21);
-            table1.addCell(cell10);
-            table1.addCell(cell11);
-            table1.addCell(cell12);
-            table1.addCell(cell13);
-            table1.addCell(cell14);
-            table1.addCell(cell15);
-            table1.addCell(cell16);
-            table1.addCell(cell17);
-            table1.addCell(cell18);
-            table1.addCell(cell19);
-            table1.addCell(cell20);
-            table1.addCell(cell21);
-            resume.add(table1);
-            Font font4;
-            font4 = new Font(Font.FontFamily.HELVETICA, 13, Font.BOLD | Font.UNDERLINE);
-            resume.add(new Chunk("Skills", font1));
+            resume.add(line);
+            Paragraph ach = new Paragraph("ACHIEVEMENTS ",font1);
+            resume.add(ach);
             resume.add(Chunk.NEWLINE);
-            resume.add(Chunk.NEWLINE);
-            Paragraph name1;
-            name1 = new Paragraph((String) details.get("Skills"));
-            name1.setIndentationLeft(50);
-            resume.add(name1);
-            Font font5;
-            font5 = new Font(Font.FontFamily.HELVETICA, 13, Font.BOLD | Font.UNDERLINE);
-            resume.add(new Chunk("Projects", font1));
-            resume.add(Chunk.NEWLINE);
-            Paragraph name2;
-            name2 = new Paragraph((String) details.get("ProjectName1"));
-            name2.setIndentationLeft(50);
-            resume.add(name2);
-            resume.add(Chunk.NEWLINE);
-            Paragraph name3;
-            name3 = new Paragraph((String) details.get("projectDescription1"));
-            name3.setIndentationLeft(50);
-            resume.add(name3);
-            resume.add(Chunk.NEWLINE);
-            Paragraph name4;
-            name4 = new Paragraph((String) details.get("ProjectName2"));
-            name4.setIndentationLeft(50);
-            resume.add(name4);
-            resume.add(Chunk.NEWLINE);
-            Paragraph name5;
-            name5 = new Paragraph((String) details.get("projectDescription2"));
-            name5.setIndentationLeft(50);
-            resume.add(name5);
-            resume.add(Chunk.NEWLINE);
-            Paragraph name6;
-            name6 = new Paragraph((String) details.get("ProjectName3"));
-            name6.setIndentationLeft(50);
-            resume.add(name6);
-            Paragraph name7;
-            name7 = new Paragraph((String) details.get("projectDescription3"));
-            name7.setIndentationLeft(50);
-            resume.add(name7);
-            resume.add(Chunk.NEWLINE);
-            Paragraph name8;
-            name8 = new Paragraph((String) details.get("ProjectName4"));
-            name8.setIndentationLeft(50);
-            resume.add(name8);
-            Paragraph name9;
-            name9 = new Paragraph((String) details.get("projectDescription4"));
-            name9.setIndentationLeft(50);
-            resume.add(name9);
+            resume.add(line);
+
+            Paragraph ac1 = new Paragraph(20,(String) "1. "+details.get("Achievement1"),font1);
+            ac1.setIndentationLeft(30);
+            resume.add(ac1);
+
+            Paragraph ac2 = new Paragraph(20,(String) "1. "+details.get("Achievement2"),font1);
+            ac2.setIndentationLeft(30);
+            resume.add(ac2);
+
             resume.close();
 
         } catch (DocumentException | FileNotFoundException e) {

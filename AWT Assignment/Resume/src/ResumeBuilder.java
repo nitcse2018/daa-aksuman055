@@ -26,6 +26,7 @@ public class ResumeBuilder implements ActionListener {
         TextField colt;
         TextField pt3;
         TextField dt3;
+        TextField bran;
         TextArea objt;
         TextField s1;
         TextField s2;
@@ -197,14 +198,20 @@ public class ResumeBuilder implements ActionListener {
         date3.setFont(new Font("Arial Black", Font.PLAIN, 13));
         dt3 = new TextField("From-to-To");
         dt3.setBounds(150, 535, 200, 20);
+
+
+        Label br = new Label("Branch Name:");
+        br.setBounds(20,565,120,20);
+        bran = new TextField();
+        bran.setBounds(150,565,200,20);
         //**********End of educational qualifications*********************
 
 
         Label obj = new Label("OBJECTIVE");
-        obj.setBounds(20, 585, 260, 20);
+        obj.setBounds(20, 605, 260, 20);
         obj.setFont(new Font("Tahoma", Font.BOLD, 20));
         objt = new TextArea();
-        objt.setBounds(20, 615, 330, 100);
+        objt.setBounds(20, 635, 330, 80);
 
 
         //********Skills*****************
@@ -409,6 +416,8 @@ public class ResumeBuilder implements ActionListener {
         mainFrame.add(pt3);
         mainFrame.add(date3);
         mainFrame.add(dt3);
+        mainFrame.add(br);
+        mainFrame.add(bran);
         mainFrame.add(obj);
         mainFrame.add(objt);
         mainFrame.add(skill);
@@ -471,19 +480,19 @@ public class ResumeBuilder implements ActionListener {
         details.put("SchoolX", schoolX);
 
         String perX = pt.getText();
-        details.put("PeercentageX", perX);
+        details.put("PercentageX", perX);
 
         String dateX = dt1.getText();
-        details.put("Date X", dateX);
+        details.put("DateX", dateX);
 
         String schoolXII = hst.getText();
         details.put("SchoolXII", schoolXII);
 
         String perXII = pt2.getText();
-        details.put("PeercentageXII", perXII);
+        details.put("PercentageXII", perXII);
 
         String dateXII = dt2.getText();
-        details.put("Date XII", dateXII);
+        details.put("DateXII", dateXII);
 
         String college = colt.getText();
         details.put("College", college);
@@ -492,7 +501,10 @@ public class ResumeBuilder implements ActionListener {
         details.put("CollegePercentage", colPer);
 
         String dateCol = dt3.getText();
-        details.put("Date College", dateCol);
+        details.put("DateCollege", dateCol);
+
+        String branch = bran.getText();
+        details.put("BranchName", branch);
 
         String objective = objt.getText();
         details.put("Objective", objective);
@@ -556,6 +568,7 @@ public class ResumeBuilder implements ActionListener {
         hst.setText("");
         pt2.setText("");
         pt3.setText("");
+        bran.setText("");
         objt.setText("");
         s1.setText("");
         s2.setText("");
@@ -636,6 +649,7 @@ public class ResumeBuilder implements ActionListener {
     private TextField pt3;
     private TextField dt3;
     private TextArea objt;
+    private TextField bran;
     private TextField s1;
     private TextField s2;
     private TextField s3;
