@@ -4,8 +4,8 @@ daa-aksuman055 created by GitHub Classroom
 # Resume Builder
 A JAVA application for building resume.
 
-![Resume Builder](https://github.com/nitcse2018/daa-aksuman055/blob/master/AWT%20Assignment/Resume/sss.png)
-![Sample Resume Generated from application](https://github.com/nitcse2018/daa-aksuman055/blob/master/AWT%20Assignment/Resume/Resume.PNG)
+![Resume Builder](https://github.com/nitcse2018/daa-aksuman055/blob/master/AWT%20Assignment/Resume/sss.PNG)
+![Sample Resume Generated from application](https://github.com/nitcse2018/daa-aksuman055/blob/master/AWT%20Assignment/Resume/Resume.png)
 
 ## Technology/Libraries Used
 1. AWT Toolkits
