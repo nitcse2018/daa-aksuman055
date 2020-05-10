@@ -1,0 +1,24 @@
+Programs read inputs from data sources (e.g., keyboard, file, network, memory buffer, or another program) and 
+write outputs to data sinks (e.g., display console, file, network, memory buffer, or another program). 
+In Java standard I/O, inputs and outputs are handled by the so-called streams. A stream is a sequential and 
+contiguous one-way flow of data (just like water or oil flows through the pipe). It is important to mention that 
+Java does not differentiate between the various types of data sources or sinks (e.g., file or network) in stream I/O. 
+They are all treated as a sequential flow of data. Input and output streams can be established from/to any data source/sink,
+such as files, network, keyboard/console or another program. The Java program receives data from a source by opening an 
+input stream, and sends data to a sink by opening an output stream. All Java I/O streams are one-way (except the RandomAccessFile,
+ which will be discussed later). If your program needs to perform both input and output, you have to open two streams - an 
+input stream and an output stream.
+
+Stream I/O operations involve three steps:
+
+Open an input/output stream associated with a physical device (e.g., file, network, console/keyboard), by constructing an 
+appropriate I/O stream instance.
+Read from the opened input stream until "end-of-stream" encountered, or write to the opened output stream (and optionally 
+flush the buffered output).
+Close the input/output stream.
+Java's I/O operations is more complicated than C/C++ to support internationalization (i18n). 
+Java internally stores characters (char type) in 16-bit UCS-2 character set. But the external data source/sink could 
+store characters in other character set (e.g., US-ASCII, ISO-8859-x, UTF-8, UTF-16, and many others), in fixed length of 
+8-bit or 16-bit, or in variable length of 1 to 4 bytes. [Read "Character Sets and Encoding Schemes"]. As a consequence, 
+Java needs to differentiate between byte-based I/O for processing raw bytes or binary data, and character-based I/O for 
+processing texts made up of characters.
